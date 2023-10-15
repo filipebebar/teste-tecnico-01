@@ -10,7 +10,7 @@ import {
   mockConfirmResponse,
   mockCreateResult,
   mockMinutesResult,
-  mockRecoveryReserveByReserveIdResult,
+  mockRecoveryReserveByReserveIdOurSlotIdResult,
   mockScheduleConfirmRequest,
 } from '../mock/data.mock';
 import { AlreadyHaveException, TimeRunOutException } from '../exception/schedules.exception';
@@ -34,7 +34,7 @@ describe('ScheduleConfirmService', () => {
         ScheduleTimeService,
         ScheduleService,
         {
-          provide: getModelToken(ScheduleConfirm.name),
+          provide: getModelToken('ScheduleConfirm'),
           useValue: {
             findOne: jest.fn(),
             create: jest.fn(),
@@ -69,7 +69,7 @@ describe('ScheduleConfirmService', () => {
     jest.spyOn(scheduleTimeService, 'getMinutes').mockReturnValue(mockMinutesResult as any);
     jest
       .spyOn(scheduleConfirmService, 'recoveryReserveByReserveId')
-      .mockResolvedValue(mockRecoveryReserveByReserveIdResult as any);
+      .mockResolvedValue(mockRecoveryReserveByReserveIdOurSlotIdResult as any);
     jest.spyOn(scheduleConfirmModel, 'findOne').mockResolvedValue(null);
     jest.spyOn(scheduleConfirmModel, 'create').mockResolvedValue(mockCreateResult as any);
 

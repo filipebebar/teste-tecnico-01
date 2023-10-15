@@ -36,7 +36,7 @@ export const mockCreateResult = {
   status: 'CONFIRMED',
 };
 
-export const mockRecoveryReserveByReserveIdResult = {
+export const mockRecoveryReserveByReserveIdOurSlotIdResult = {
   reserveId: 'f1a8b6d8-a132-25d1-f6b5-5cddd8c93bf7',
   slotId: '30ae1c40-83ba-40c4-99fa-ddcd6ce39a7e',
   scheduledTime: new Date(),

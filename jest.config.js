@@ -8,6 +8,7 @@ module.exports = {
     'node_modules',
     'utils',
     'schemas',
+    'populate',
     '.mock.ts$',
     '.dto.ts$',
     '.errors.ts$',
