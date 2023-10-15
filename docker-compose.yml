@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  mongo_db:
+    container_name: mongo_db
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_USERNAME: root
+      MONGO_INITDB_PASSWORD: example
+      MONGO_INITDB_DATABASE: local
+      
+  teste-tecnico-rededor:
+    container_name: teste-tecnico-rededor
+    ports:
+      - '3000:3000'
+    build: .
+    volumes:
+      - .:/home/teste-tecnico-rededor
+      - /home/teste-tecnico-rededor/node_modules
+    depends_on:
+      - mongo_db
+    links:
+      - mongo_db
+
+
