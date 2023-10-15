@@ -13,9 +13,10 @@ export class ScheduleCancelService {
     try {
       const result = await this.findOneScheduleByScheduleId(scheduleId);
       if (result) {
-        const updated = await this.scheduleConfirmModel
-          .updateOne({ scheduleId: scheduleId }, { $set: { status: 'CANCELED' } })
-          .exec();
+        const updated = await this.scheduleConfirmModel.updateOne(
+          { scheduleId: scheduleId },
+          { $set: { status: 'CANCELED' } },
+        );
 
         if (updated.modifiedCount === 1) {
           const resultAfterUpdated = await this.findOneScheduleByScheduleId(scheduleId);
