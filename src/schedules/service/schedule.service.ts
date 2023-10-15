@@ -40,7 +40,8 @@ export class ScheduleService {
 
   async updateScheduleToUnbook(slotId) {
     try {
-      await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } }).exec();
+      const updated = await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } }).exec();
+      return updated.modifiedCount === 1;
     } catch (e) {
       throw new DataBaseUpdateException();
     }

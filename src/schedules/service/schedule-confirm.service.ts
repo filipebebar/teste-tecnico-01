@@ -45,8 +45,8 @@ export class ScheduleConfirmService {
       const passMinutes = validateScheduleTime(reservedResult.scheduledTime, recoveredTime.minutes);
 
       if (passMinutes) {
-        await this.scheduleService.updateScheduleToUnbook(reservedResult.slotId);
-        return new TimeRunOutException();
+        const result = await this.scheduleService.updateScheduleToUnbook(reservedResult.slotId);
+        if (result) return new TimeRunOutException();
       }
     } catch (e) {
       throw new Error(e);

@@ -30,3 +30,19 @@ export const mockCancelResponse = {
   scheduleId: '160d7602-849d-7936-d638-3ef361beb43d',
   status: 'CANCELED',
 };
+
+export const mockCreateResult = {
+  scheduleId: '86170d96-39ac-99e5-b0b2-95be41117350',
+  status: 'CONFIRMED',
+};
+
+export const mockRecoveryReserveByReserveIdResult = {
+  reserveId: 'f1a8b6d8-a132-25d1-f6b5-5cddd8c93bf7',
+  slotId: '30ae1c40-83ba-40c4-99fa-ddcd6ce39a7e',
+  scheduledTime: new Date(),
+};
+
+export const mockMinutesResult = {
+  slotId: 'exampleSlotId',
+  minutes: 3,
+};
