@@ -3,7 +3,7 @@ import { ScheduleCancelService } from './schedule-cancel.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ScheduleConfirm } from '../../database/models/Schedule-confirm.schema';
-import { CancelException, DataBaseGetOneException } from '../exception/schedules.exception';
+import { CancelException } from '../exception/schedules.exception';
 
 describe('ScheduleCancelService', () => {
   let scheduleCancelService: ScheduleCancelService;
