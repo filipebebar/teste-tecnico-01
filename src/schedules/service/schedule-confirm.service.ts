@@ -7,6 +7,7 @@ import { ScheduleReserveService } from './schedule-reserve.service';
 import { validateScheduleBetweenTime, validateScheduleTime } from '../../utils/validateScheduleTime';
 import { ScheduleTimeService } from './schedule-time.service';
 import { ScheduleService } from './schedule.service';
+import { AlreadyHaveException, DataBaseGetOneException, TimeRunOutException } from '../exception/schedules.exception';
 
 @Injectable()
 export class ScheduleConfirmService {
@@ -22,7 +23,7 @@ export class ScheduleConfirmService {
       const result = await this.getScheduleConfirmationByScheduleId(scheduleConfirmRequest.reserveId);
 
       if (result) {
-        return 'já existe um agendamento confirmado para está reserva!';
+        return new AlreadyHaveException();
       }
 
       const reservedResult = await this.recoveryReserveByReserveId(scheduleConfirmRequest.reserveId);
@@ -45,7 +46,7 @@ export class ScheduleConfirmService {
 
       if (passMinutes) {
         await this.scheduleService.updateScheduleToUnbook(reservedResult.slotId);
-        return 'O tempo de agendamento já estourou!';
+        return new TimeRunOutException();
       }
     } catch (e) {
       throw new Error(e);
@@ -53,12 +54,20 @@ export class ScheduleConfirmService {
   }
 
   async getScheduleConfirmationByScheduleId(reserveId) {
-    const result = await this.scheduleConfirmModel.findOne({ reserveId: reserveId });
-    return result;
+    try {
+      const result = await this.scheduleConfirmModel.findOne({ reserveId: reserveId });
+      return result;
+    } catch (e) {
+      throw new DataBaseGetOneException();
+    }
   }
 
   async recoveryReserveByReserveId(reserveId) {
-    const result = await this.scheduleReserveService.findOneScheduleByReserveId(reserveId);
-    return result;
+    try {
+      const result = await this.scheduleReserveService.findOneScheduleByReserveId(reserveId);
+      return result;
+    } catch (e) {
+      throw new DataBaseGetOneException();
+    }
   }
 }

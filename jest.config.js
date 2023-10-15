@@ -15,6 +15,7 @@ module.exports = {
     '.exception.ts$',
     '.provider.ts$',
     '.schema.ts$',
+    '.middleware.ts$',
   ],
   testRegex: '.spec.ts$',
   transform: {

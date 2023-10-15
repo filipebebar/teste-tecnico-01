@@ -6,6 +6,7 @@ import { Injectable } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { validateScheduleBetweenTime, validateScheduleTime } from '../../utils/validateScheduleTime';
 import { ScheduleTimeService } from './schedule-time.service';
+import { DataBaseGetOneException, MoreThanOneException, TimeRunOutException } from '../exception/schedules.exception';
 
 @Injectable()
 export class ScheduleReserveService {
@@ -21,7 +22,7 @@ export class ScheduleReserveService {
 
     try {
       const result = await this.recoveryReserveBySlotId(slotId);
-      const recoveredSchedule = await this.scheduleService.validReserveBySlotId(result?.slotId);
+      const recoveredSchedule = await this.scheduleService.getReserveBySlotId(result?.slotId);
 
       if (!result || !recoveredSchedule) {
         scheduleRequest.reserveId = Guid.create();
@@ -34,14 +35,14 @@ export class ScheduleReserveService {
       const betweenMinutes = validateScheduleBetweenTime(result.scheduledTime, recoveredTime.minutes);
 
       if (recoveredSchedule && betweenMinutes) {
-        return 'Não é possível realizar mais de um agendamento seguidos!';
+        return new MoreThanOneException();
       }
 
       const passMinutes = validateScheduleTime(result.scheduledTime, recoveredTime.minutes);
 
       if (passMinutes) {
         await this.scheduleService.updateScheduleToUnbook(slotId);
-        return 'O tempo de agendamento já estourou!';
+        return new TimeRunOutException();
       }
     } catch (e) {
       throw new Error(e);
@@ -49,11 +50,19 @@ export class ScheduleReserveService {
   }
 
   async recoveryReserveBySlotId(slotId) {
-    const result = await this.scheduleReserveModel.findOne({ slotId: slotId });
-    return result;
+    try {
+      const result = await this.scheduleReserveModel.findOne({ slotId: slotId });
+      return result;
+    } catch (e) {
+      throw new DataBaseGetOneException();
+    }
   }
 
   async findOneScheduleByReserveId(reserveId) {
-    return this.scheduleReserveModel.findOne({ reserveId: reserveId });
+    try {
+      return this.scheduleReserveModel.findOne({ reserveId: reserveId });
+    } catch (e) {
+      throw new DataBaseGetOneException();
+    }
   }
 }

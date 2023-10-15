@@ -2,6 +2,12 @@ import { Model } from 'mongoose';
 import { Schedule } from '../../database/models/Schedule.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
+import {
+  DataBaseGetOneException,
+  DataBaseListException,
+  DataBaseUpdateException,
+  NotFoundException,
+} from '../exception/schedules.exception';
 
 @Injectable()
 export class ScheduleService {
@@ -11,24 +17,24 @@ export class ScheduleService {
     try {
       const recovered = await this.scheduleModel.find({ reserved: false });
       if (!recovered || recovered.length <= 0) {
-        return 'Nenhum agendamento encontrado!';
+        return new NotFoundException();
       }
       return recovered;
     } catch (e) {
-      throw new Error(e);
+      throw new DataBaseListException();
     }
   }
 
   async updateScheduleToReserve(slotId) {
     try {
-      const result = await this.validReserveBySlotId(slotId);
+      const result = await this.getReserveBySlotId(slotId);
       if (!result) {
         await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: true } }).exec();
         return true;
       }
       return false;
     } catch (e) {
-      throw new Error(e);
+      throw new DataBaseUpdateException();
     }
   }
 
@@ -36,15 +42,19 @@ export class ScheduleService {
     try {
       await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } }).exec();
     } catch (e) {
-      throw new Error(e);
+      throw new DataBaseUpdateException();
     }
   }
 
-  async validReserveBySlotId(slotId) {
-    if (slotId === undefined) {
-      return null;
+  async getReserveBySlotId(slotId) {
+    try {
+      if (slotId === undefined) {
+        return null;
+      }
+      const result = await this.scheduleModel.findOne({ slotId: slotId });
+      return result.reserved;
+    } catch (e) {
+      throw new DataBaseGetOneException();
     }
-    const result = await this.scheduleModel.findOne({ slotId: slotId });
-    return result.reserved;
   }
 }

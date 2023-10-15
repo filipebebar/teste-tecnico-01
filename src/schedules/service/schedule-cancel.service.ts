@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { ScheduleConfirm } from '../../database/models/Schedule-confirm.schema';
+import { CancelException, DataBaseGetOneException } from '../exception/schedules.exception';
 
 @Injectable()
 export class ScheduleCancelService {
@@ -26,12 +27,16 @@ export class ScheduleCancelService {
         }
       }
     } catch (e) {
-      throw new Error(e);
+      throw new CancelException();
     }
   }
 
   async findOneScheduleByScheduleId(scheduleId) {
-    const result = await this.scheduleConfirmModel.findOne({ scheduleId: scheduleId });
-    return result;
+    try {
+      const result = await this.scheduleConfirmModel.findOne({ scheduleId: scheduleId });
+      return result;
+    } catch (e) {
+      throw new DataBaseGetOneException();
+    }
   }
 }
