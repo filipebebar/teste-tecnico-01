@@ -46,3 +46,11 @@ export const mockMinutesResult = {
   slotId: 'exampleSlotId',
   minutes: 3,
 };
+
+export const mockUpdateResult = {
+  acknowledged: true,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0,
+  upsertedId: null,
+};

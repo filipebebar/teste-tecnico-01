@@ -26,10 +26,10 @@ export class ScheduleService {
   }
 
   async updateScheduleToReserve(slotId) {
+    const result = await this.getReserveBySlotId(slotId);
     try {
-      const result = await this.getReserveBySlotId(slotId);
       if (!result) {
-        await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: true } }).exec();
+        await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: true } });
         return true;
       }
       return false;
@@ -40,7 +40,7 @@ export class ScheduleService {
 
   async updateScheduleToUnbook(slotId) {
     try {
-      const updated = await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } }).exec();
+      const updated = await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } });
       return updated.modifiedCount === 1;
     } catch (e) {
       throw new DataBaseUpdateException();
