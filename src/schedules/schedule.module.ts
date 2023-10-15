@@ -29,5 +29,12 @@ import { ScheduleUtilController } from './controller/schedule-util.controller';
     ScheduleCancelService,
     ScheduleTimeService,
   ],
+  exports: [
+    ScheduleService,
+    ScheduleReserveService,
+    ScheduleConfirmService,
+    ScheduleCancelService,
+    ScheduleTimeService,
+  ],
 })
 export class ScheduleModule {}

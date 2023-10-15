@@ -10,7 +10,10 @@ export class ScheduleTimeService {
 
   async getMinutes() {
     const result = await this.scheduleTimeModel.findOne();
-    return result;
+    return {
+      slotId: result.slotId,
+      minutes: result.minutes,
+    };
   }
 
   async updateTimeSchedule(scheduleTimeRequest) {
