@@ -19,7 +19,7 @@ export class ScheduleTimeService {
   async updateTimeSchedule(scheduleTimeRequest) {
     const { slotId, minutes } = scheduleTimeRequest;
     try {
-      const result = await this.scheduleTimeModel.updateOne({ slotId: slotId }, { $set: { minutes: minutes } }).exec();
+      const result = await this.scheduleTimeModel.updateOne({ slotId: slotId }, { $set: { minutes: minutes } });
       if (result.modifiedCount === 1) {
         return 'Tempo de reserva de agendamento atualizado com sucesso!';
       }
