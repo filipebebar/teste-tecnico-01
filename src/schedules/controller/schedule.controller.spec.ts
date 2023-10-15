@@ -60,7 +60,6 @@ describe('ScheduleController', () => {
     expect(scheduleController).toBeDefined();
   });
 
-  // Add more test cases as needed for your controller methods
   it('should create a schedule reserve', async () => {
     const scheduleRequest: ScheduleRequestDTO = {
       slotId: '1dbf9347-f861-4358-b883-2b227bb08fbc',
