@@ -25,6 +25,9 @@ Acesse a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000/
 Casote nha problemas para rodar a aplicação no docker e a o banco mongoDB subir, siga:
 
 ```bash
+# Caso seja necessário, acessar o docker da aplicação e dentro da pasta raiz rodar o comando a seguir:
+$ docker exec -it teste-tecnico-rededor sh
+
 # populate database
 $ yarn populate
 
