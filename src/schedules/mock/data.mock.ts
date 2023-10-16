@@ -1,4 +1,6 @@
-import { ScheduleCancelRequestDTO, ScheduleConfirmRequestDTO, ScheduleRequestDTO } from '../dto/schedule.dto';
+import { ScheduleRequestDTO } from '../dto/schedule-request.dto';
+import { ScheduleConfirmRequestDTO } from '../dto/schedule-confirm-request.dto';
+import { ScheduleCancelRequestDTO } from '../dto/schedule-cancel-request.dto';
 
 const mockSlotId = '1dbf9347-f861-4358-b883-2b227bb08fbc';
 export const mockScheduleRequest: ScheduleRequestDTO = {

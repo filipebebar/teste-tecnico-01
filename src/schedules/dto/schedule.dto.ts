@@ -1,17 +1,51 @@
-export class ScheduleRequestDTO {
+export class ScheduleDTO {
   slotId: string;
-}
-
-export class ScheduleConfirmRequestDTO {
-  reserveId: string;
-  patient: {
+  startDate: Date;
+  endDate: Date;
+  speciality: {
+    slotId: string;
     name: string;
-    email: string;
-    gender: string;
-    birthDate: Date;
   };
-}
+  unit: {
+    slotId: string;
+    name: string;
+  };
+  doctor: {
+    slotId: string;
+    name: string;
+  };
 
-export class ScheduleCancelRequestDTO {
-  scheduleId: string;
+  constructor(data: {
+    slotId: string;
+    startDate: Date;
+    endDate: Date;
+    speciality: {
+      slotId: string;
+      name: string;
+    };
+    unit: {
+      slotId: string;
+      name: string;
+    };
+    doctor: {
+      slotId: string;
+      name: string;
+    };
+  }) {
+    this.slotId = data.slotId;
+    this.startDate = data.startDate;
+    this.endDate = data.endDate;
+    this.speciality = {
+      slotId: data.speciality.slotId,
+      name: data.speciality.name,
+    };
+    this.unit = {
+      slotId: data.unit.slotId,
+      name: data.unit.name,
+    };
+    this.doctor = {
+      slotId: data.doctor.slotId,
+      name: data.doctor.name,
+    };
+  }
 }
