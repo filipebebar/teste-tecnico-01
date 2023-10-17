@@ -1,71 +1,59 @@
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
-import { ScheduleConfirm } from '../../database/models/Schedule-confirm.schema';
-import { Guid } from 'guid-typescript';
-import { ScheduleReserveService } from './schedule-reserve.service';
 import { validateScheduleBetweenTime, validateScheduleTime } from '../../utils/validateScheduleTime';
 import { ScheduleTimeService } from './schedule-time.service';
 import { AlreadyHaveException, DataBaseGetOneException, TimeRunOutException } from '../exception/schedules.exception';
 import { ScheduleRepository } from '../repository/schedule.repository';
+import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
+import { ScheduleConfirmRepository } from '../repository/schedule-confirm.repository';
 
 @Injectable()
 export class ScheduleConfirmService {
   constructor(
-    @InjectModel(ScheduleConfirm.name) private scheduleConfirmModel: Model<ScheduleConfirm>,
-    private readonly scheduleReserveService: ScheduleReserveService,
     private readonly scheduleTimeService: ScheduleTimeService,
     private readonly scheduleRepository: ScheduleRepository,
+    private readonly scheduleReserveRepository: ScheduleReserveRepository,
+    private readonly scheduleConfirmRepository: ScheduleConfirmRepository,
   ) {}
 
   async createScheduleConfirm(scheduleConfirmRequest) {
     try {
-      const result = await this.getScheduleConfirmationByScheduleId(scheduleConfirmRequest.reserveId);
+      const result = await this.recoveryScheduleConfirmation(scheduleConfirmRequest.reserveId);
 
       if (result) {
         return new AlreadyHaveException();
       }
 
-      const reservedResult = await this.recoveryReserveByReserveId(scheduleConfirmRequest.reserveId);
+      const reservedResult = await this.recoveryReserve(scheduleConfirmRequest.reserveId);
       const recoveredTime = await this.scheduleTimeService.getMinutes();
       const betweenMinutes = validateScheduleBetweenTime(reservedResult.scheduledTime, recoveredTime.minutes);
 
       if (!result && betweenMinutes) {
-        scheduleConfirmRequest.status = 'CONFIRMED';
-        scheduleConfirmRequest.scheduleId = Guid.create();
-        scheduleConfirmRequest.patient.slotId = Guid.create();
-
-        const created = await this.scheduleConfirmModel.create(scheduleConfirmRequest);
-        return {
-          scheduleId: created.scheduleId,
-          status: created.status,
-        };
+        return await this.scheduleConfirmRepository.create(scheduleConfirmRequest);
       }
 
       const passMinutes = validateScheduleTime(reservedResult.scheduledTime, recoveredTime.minutes);
 
       if (passMinutes) {
-        //alterar update da reserva
-        const result = await this.scheduleRepository.updateToReserve(reservedResult.slotId);
-        if (result) return new TimeRunOutException();
+        await this.scheduleRepository.updateToUnbook(reservedResult.slotId);
+        return new TimeRunOutException();
       }
     } catch (e) {
       throw new Error(e);
     }
   }
 
-  async getScheduleConfirmationByScheduleId(reserveId) {
+  async recoveryScheduleConfirmation(reserveId) {
     try {
-      const result = await this.scheduleConfirmModel.findOne({ reserveId: reserveId });
+      const result = await this.scheduleConfirmRepository.findOneByReserveId(reserveId);
       return result;
     } catch (e) {
       throw new DataBaseGetOneException();
     }
   }
 
-  async recoveryReserveByReserveId(reserveId) {
+  async recoveryReserve(reserveId) {
     try {
-      const result = await this.scheduleReserveService.findOneScheduleByReserveId(reserveId);
+      const result = await this.scheduleReserveRepository.findOneByReserveId(reserveId);
       return result;
     } catch (e) {
       throw new DataBaseGetOneException();

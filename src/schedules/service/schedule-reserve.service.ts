@@ -57,12 +57,4 @@ export class ScheduleReserveService {
       throw new DataBaseGetOneException();
     }
   }
-
-  async findOneScheduleByReserveId(reserveId) {
-    try {
-      return this.scheduleReserveModel.findOne({ reserveId: reserveId });
-    } catch (e) {
-      throw new DataBaseGetOneException();
-    }
-  }
 }

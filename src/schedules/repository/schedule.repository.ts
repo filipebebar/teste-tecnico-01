@@ -45,7 +45,7 @@ export class ScheduleRepository {
   }
 
   async updateToUnbook(slotId) {
-    await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } });
+    this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } });
   }
 
   async findOneBySlotId(slotId) {

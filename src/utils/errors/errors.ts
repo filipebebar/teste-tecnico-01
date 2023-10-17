@@ -37,7 +37,7 @@ export const ERROS = {
     },
     TIME_HAS_RUN_OUT: {
       code: 2003,
-      message: 'O tempo para realizar o agendamento foi finalizado, por favor realize os passos novamente!',
+      message: 'O tempo para realizar o agendamento foi finalizado, por favor realize o agendamento novamente!!',
       statusCode: HttpStatus.ACCEPTED,
     },
     MORE_THAN_ONE_SAME_TIME: {

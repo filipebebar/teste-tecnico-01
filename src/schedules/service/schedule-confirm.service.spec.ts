@@ -68,7 +68,7 @@ describe('ScheduleConfirmService', () => {
   it('should create a schedule confirmation', async () => {
     jest.spyOn(scheduleTimeService, 'getMinutes').mockReturnValue(mockMinutesResult as any);
     jest
-      .spyOn(scheduleConfirmService, 'recoveryReserveByReserveId')
+      .spyOn(scheduleConfirmService, 'recoveryReserve')
       .mockResolvedValue(mockRecoveryReserveByReserveIdOurSlotIdResult as any);
     jest.spyOn(scheduleConfirmModel, 'findOne').mockResolvedValue(null);
     jest.spyOn(scheduleConfirmModel, 'create').mockResolvedValue(mockCreateResult as any);
@@ -79,7 +79,7 @@ describe('ScheduleConfirmService', () => {
   });
 
   it('should call createdScheduleConfirmation and already have result', async () => {
-    jest.spyOn(scheduleConfirmService, 'getScheduleConfirmationByScheduleId').mockReturnValue(mockCreateResult as any);
+    jest.spyOn(scheduleConfirmService, 'recoveryScheduleConfirmation').mockReturnValue(mockCreateResult as any);
 
     const result = await scheduleConfirmService.createScheduleConfirm(mockScheduleConfirmRequest);
 
@@ -96,9 +96,9 @@ describe('ScheduleConfirmService', () => {
       mockRecoveryReserveByReserveIdResultOutTime.scheduledTime.getMinutes() - 10,
     );
 
-    jest.spyOn(scheduleConfirmService, 'getScheduleConfirmationByScheduleId').mockReturnValue(null);
+    jest.spyOn(scheduleConfirmService, 'recoveryScheduleConfirmation').mockReturnValue(null);
     jest
-      .spyOn(scheduleConfirmService, 'recoveryReserveByReserveId')
+      .spyOn(scheduleConfirmService, 'recoveryReserve')
       .mockResolvedValue(mockRecoveryReserveByReserveIdResultOutTime as any);
     jest.spyOn(scheduleTimeService, 'getMinutes').mockReturnValue(mockMinutesResult as any);
     jest.spyOn(scheduleService, 'updateScheduleToUnbook').mockReturnValue(true as any);
