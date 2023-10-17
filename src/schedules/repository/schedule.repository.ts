@@ -24,25 +24,18 @@ export class ScheduleRepository {
     const query = { slotId: slotId };
     const update = { $set: { reserved: true, lastAppointment: new Date() } };
 
-    await this.scheduleModel
-      .findOneAndUpdate(query, update)
-      .exec()
-      .then((doc) => {
-        return !doc;
-      });
+    const doc = await this.scheduleModel.findOneAndUpdate(query, update);
+
+    return !doc;
   }
 
   async updateToUnbook(slotId) {
     await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } });
   }
 
-  async updateLastScheduled(slotId) {
-    await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { lastAppointment: new Date() } });
-  }
-
   async findOneBySlotId(slotId) {
     if (slotId === undefined) {
-      return null;
+      return { result: null };
     }
     const result = await this.scheduleModel.findOne({ slotId: slotId });
     return result.reserved;

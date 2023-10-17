@@ -19,11 +19,10 @@ export class ScheduleReserveService {
 
     try {
       const result = await this.recoveryReserve(slotId);
-      const recoveredSchedule = await this.scheduleRepository.findOneBySlotId(result?.slotId);
+      const recoveredSchedule = await this.recoverySchedule(result?.slotId);
 
       if (!result || !recoveredSchedule) {
         await this.scheduleRepository.updateToReserve(slotId);
-        await this.scheduleRepository.updateLastScheduled(slotId);
         const createdResult = await this.scheduleReserveRepository.create(scheduleRequest);
 
         return { reserveId: createdResult.reserveId };
@@ -49,6 +48,14 @@ export class ScheduleReserveService {
   async recoveryReserve(slotId) {
     try {
       return this.scheduleReserveRepository.findOneBySlotId(slotId);
+    } catch (e) {
+      throw new DataBaseGetOneException();
+    }
+  }
+
+  async recoverySchedule(slotId) {
+    try {
+      return await this.scheduleRepository.findOneBySlotId(slotId);
     } catch (e) {
       throw new DataBaseGetOneException();
     }
