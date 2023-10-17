@@ -1,43 +1,36 @@
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
-import { ScheduleConfirm } from '../../database/models/Schedule-confirm.schema';
-import { CancelException, DataBaseGetOneException } from '../exception/schedules.exception';
+import { CancelException } from '../exception/schedules.exception';
+import { ScheduleConfirmRepository } from '../repository/schedule-confirm.repository';
+import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
+import { ScheduleRepository } from '../repository/schedule.repository';
 
 @Injectable()
 export class ScheduleCancelService {
-  constructor(@InjectModel(ScheduleConfirm.name) private scheduleConfirmModel: Model<ScheduleConfirm>) {}
+  constructor(
+    private readonly scheduleConfirmRepository: ScheduleConfirmRepository,
+    private readonly scheduleReserveRepository: ScheduleReserveRepository,
+    private readonly scheduleRepository: ScheduleRepository,
+  ) {}
 
   async scheduleCancel(scheduleCancelRequest) {
     const { scheduleId } = scheduleCancelRequest;
     try {
-      const result = await this.findOneScheduleByScheduleId(scheduleId);
+      const result = await this.scheduleConfirmRepository.findOneByScheduleId(scheduleId);
       if (result) {
-        const updated = await this.scheduleConfirmModel.updateOne(
-          { scheduleId: scheduleId },
-          { $set: { status: 'CANCELED' } },
-        );
-
-        if (updated.modifiedCount === 1) {
-          const resultAfterUpdated = await this.findOneScheduleByScheduleId(scheduleId);
-
-          return {
-            scheduleId: resultAfterUpdated.scheduleId,
-            status: resultAfterUpdated.status,
-          };
-        }
+        await this.updateScheduleToUnbook(result.reserveId);
+        return await this.scheduleConfirmRepository.updateToCancel(scheduleId);
       }
     } catch (e) {
       throw new CancelException();
     }
   }
 
-  async findOneScheduleByScheduleId(scheduleId) {
+  async updateScheduleToUnbook(reserveId) {
     try {
-      const result = await this.scheduleConfirmModel.findOne({ scheduleId: scheduleId });
-      return result;
+      const result = await this.scheduleReserveRepository.findOneByReserveId(reserveId);
+      await this.scheduleRepository.updateToUnbook(result.slotId);
     } catch (e) {
-      throw new DataBaseGetOneException();
+      throw new Error(e);
     }
   }
 }

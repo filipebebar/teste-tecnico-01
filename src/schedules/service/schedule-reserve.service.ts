@@ -3,17 +3,17 @@ import { InjectModel } from '@nestjs/mongoose';
 import { ScheduleReserve } from '../../database/models/Schedule-reserve.schema';
 import { Guid } from 'guid-typescript';
 import { Injectable } from '@nestjs/common';
-import { ScheduleService } from './schedule.service';
 import { validateScheduleBetweenTime, validateScheduleTime } from '../../utils/validateScheduleTime';
 import { ScheduleTimeService } from './schedule-time.service';
 import { DataBaseGetOneException, MoreThanOneException, TimeRunOutException } from '../exception/schedules.exception';
+import { ScheduleRepository } from '../repository/schedule.repository';
 
 @Injectable()
 export class ScheduleReserveService {
   constructor(
     @InjectModel(ScheduleReserve.name) private scheduleReserveModel: Model<ScheduleReserve>,
-    private readonly scheduleService: ScheduleService,
     private readonly scheduleTimeService: ScheduleTimeService,
+    private readonly scheduleRepository: ScheduleRepository,
   ) {}
 
   async createReserve(scheduleRequest) {
@@ -22,12 +22,12 @@ export class ScheduleReserveService {
 
     try {
       const result = await this.recoveryReserveBySlotId(slotId);
-      const recoveredSchedule = await this.scheduleService.getReserveBySlotId(result?.slotId);
+      const recoveredSchedule = await this.scheduleRepository.findOneBySlotId(result?.slotId);
 
       if (!result || !recoveredSchedule) {
         scheduleRequest.reserveId = Guid.create();
         const created = await this.scheduleReserveModel.create(scheduleRequest);
-        await this.scheduleService.updateScheduleToReserve(slotId);
+        await this.scheduleRepository.updateToReserve(slotId);
 
         return { reserveId: created.reserveId };
       }
@@ -41,7 +41,7 @@ export class ScheduleReserveService {
       const passMinutes = validateScheduleTime(result.scheduledTime, recoveredTime.minutes);
 
       if (passMinutes) {
-        await this.scheduleService.updateScheduleToUnbook(slotId);
+        await this.scheduleRepository.updateToReserve(slotId);
         return new TimeRunOutException();
       }
     } catch (e) {

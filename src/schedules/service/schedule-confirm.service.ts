@@ -6,8 +6,8 @@ import { Guid } from 'guid-typescript';
 import { ScheduleReserveService } from './schedule-reserve.service';
 import { validateScheduleBetweenTime, validateScheduleTime } from '../../utils/validateScheduleTime';
 import { ScheduleTimeService } from './schedule-time.service';
-import { ScheduleService } from './schedule.service';
 import { AlreadyHaveException, DataBaseGetOneException, TimeRunOutException } from '../exception/schedules.exception';
+import { ScheduleRepository } from '../repository/schedule.repository';
 
 @Injectable()
 export class ScheduleConfirmService {
@@ -15,7 +15,7 @@ export class ScheduleConfirmService {
     @InjectModel(ScheduleConfirm.name) private scheduleConfirmModel: Model<ScheduleConfirm>,
     private readonly scheduleReserveService: ScheduleReserveService,
     private readonly scheduleTimeService: ScheduleTimeService,
-    private readonly scheduleService: ScheduleService,
+    private readonly scheduleRepository: ScheduleRepository,
   ) {}
 
   async createScheduleConfirm(scheduleConfirmRequest) {
@@ -45,7 +45,8 @@ export class ScheduleConfirmService {
       const passMinutes = validateScheduleTime(reservedResult.scheduledTime, recoveredTime.minutes);
 
       if (passMinutes) {
-        const result = await this.scheduleService.updateScheduleToUnbook(reservedResult.slotId);
+        //alterar update da reserva
+        const result = await this.scheduleRepository.updateToReserve(reservedResult.slotId);
         if (result) return new TimeRunOutException();
       }
     } catch (e) {

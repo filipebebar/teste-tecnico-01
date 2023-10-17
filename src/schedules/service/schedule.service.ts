@@ -18,7 +18,7 @@ export class ScheduleService {
     const result = await this.scheduleRepository.findOneBySlotId(slotId);
     try {
       if (!result) {
-        await this.scheduleRepository.update(slotId);
+        await this.scheduleRepository.updateToReserve(slotId);
         return true;
       }
       return false;
