@@ -76,7 +76,6 @@ describe('ScheduleRepository', () => {
   it('should call updateToUnbook', async () => {
     const slotId = 'slot1';
 
-    // Configurar o mock para retornar um valor que faz a função retornar 'false'
     jest.spyOn(scheduleModel, 'updateOne').mockReturnValue({ nModified: 0 } as any);
 
     await scheduleRepository.updateToUnbook(slotId);

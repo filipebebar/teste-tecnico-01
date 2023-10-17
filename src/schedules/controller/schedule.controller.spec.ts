@@ -7,7 +7,7 @@ import { ScheduleCancelService } from '../service/schedule-cancel.service';
 import { ScheduleTimeService } from '../service/schedule-time.service';
 import { schedulesData } from '../../database/populate/dbData';
 import {
-  mockCancelResponse,
+  mockResponseConfirmModel,
   mockConfirmResponse,
   mockResponse,
   mockScheduleCancelRequest,
@@ -78,10 +78,10 @@ describe('ScheduleController', () => {
   });
 
   it('should cancel a schedule', async () => {
-    jest.spyOn(scheduleCancelService, 'scheduleCancel').mockResolvedValue(mockCancelResponse);
+    jest.spyOn(scheduleCancelService, 'scheduleCancel').mockResolvedValue(mockResponseConfirmModel);
 
     const response = await scheduleController.scheduleCancel(mockScheduleCancelRequest);
-    expect(response).toEqual(mockCancelResponse);
+    expect(response).toEqual(mockResponseConfirmModel);
   });
 
   it('should return list of schedules', async () => {

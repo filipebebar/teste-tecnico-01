@@ -28,7 +28,7 @@ export const mockScheduleCancelRequest: ScheduleCancelRequestDTO = {
   scheduleId: '160d7602-849d-7936-d638-3ef361beb43d',
 };
 
-export const mockCancelResponse = {
+export const mockResponseConfirmModel = {
   scheduleId: '160d7602-849d-7936-d638-3ef361beb43d',
   status: 'CANCELED',
 };
