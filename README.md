@@ -7,6 +7,10 @@ Houve problemas adicionar o comando yarn populate dentro do dockerfile, o mesmo 
 
 Os passos para rodar a aplicação estão abaixo.
 
+## Atenção
+Caso esteja utilizando uma maquina windows ao baixar o repository, antes de subir o docker deve-se alterar
+a chamada do banco de dados caminho : src/app.module.ts e 
+alterar de : mongodb://http://127.0.0.1:27017/local para mongodb://host.docker.internal:27017/local
 
 ## Installation
 
@@ -20,9 +24,9 @@ $ yarn install
 # development
 $ docker compose up -d
 ```
-Acesse a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000/doc)
+Acesse a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000)
 
-Casote nha problemas para rodar a aplicação no docker e a o banco mongoDB subir, siga:
+Caso tenha problemas para rodar a aplicação no docker e a o banco mongoDB subir, siga:
 
 ```bash
 # Caso seja necessário, acessar o docker da aplicação e dentro da pasta raiz rodar o comando a seguir:
@@ -34,7 +38,7 @@ $ yarn populate
 # development
 $ yarn start:dev
 ```
-E acesse normalmente a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000/doc)
+E acesse normalmente a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000)
 
 ## Test
 
