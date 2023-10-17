@@ -12,7 +12,7 @@ import {
   mockResultScheduleList,
   mockResultScheduleListComplete,
   mockResultScheduleListCompleteWithAppoitment,
-  mockUpdateResult,
+  mockUpdateResultOk,
 } from '../mock/data.mock';
 import { schedulesData } from '../../database/populate/dbData';
 import { NotFoundException } from '../exception/schedules.exception';
@@ -66,7 +66,7 @@ describe('ScheduleRepository', () => {
   it('should call updateToReserve', async () => {
     const slotId = 'slot1';
 
-    jest.spyOn(scheduleModel, 'updateOne').mockResolvedValue(mockUpdateResult);
+    jest.spyOn(scheduleModel, 'updateOne').mockResolvedValue(mockUpdateResultOk);
 
     const result = await scheduleRepository.updateToReserve(slotId);
 
@@ -86,7 +86,7 @@ describe('ScheduleRepository', () => {
   it('should try update schedule to unbook', async () => {
     const slotId = 'slot1';
 
-    jest.spyOn(scheduleModel, 'findOneAndUpdate').mockResolvedValue(mockUpdateResult);
+    jest.spyOn(scheduleModel, 'findOneAndUpdate').mockResolvedValue(mockUpdateResultOk);
 
     const result = await scheduleRepository.updateToReserve(slotId);
 

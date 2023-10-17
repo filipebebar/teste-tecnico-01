@@ -8,7 +8,7 @@ import {
   mockCreateResult,
   mockResponseConfirmModel,
   mockScheduleConfirmRequest,
-  mockUpdateResult,
+  mockUpdateResultOk,
 } from '../mock/data.mock';
 
 describe('ScheduleConfirmRepository', () => {
@@ -31,7 +31,7 @@ describe('ScheduleConfirmRepository', () => {
   it('should call updateToCancel', async () => {
     const scheduleId = '160d7602-849d-7936-d638-3ef361beb43d';
 
-    jest.spyOn(scheduleConfirmModel, 'updateOne').mockReturnValue(mockUpdateResult as any);
+    jest.spyOn(scheduleConfirmModel, 'updateOne').mockReturnValue(mockUpdateResultOk as any);
     jest.spyOn(scheduleConfirmRepository, 'findOneByScheduleId').mockReturnValue(mockResponseConfirmModel as any);
 
     const result = await scheduleConfirmRepository.updateToCancel(scheduleId);

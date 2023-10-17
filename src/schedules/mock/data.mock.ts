@@ -49,10 +49,18 @@ export const mockMinutesResult = {
   minutes: 3,
 };
 
-export const mockUpdateResult = {
+export const mockUpdateResultOk = {
   acknowledged: true,
   matchedCount: 1,
   modifiedCount: 1,
+  upsertedCount: 0,
+  upsertedId: null,
+};
+
+export const mockUpdateResultFail = {
+  acknowledged: true,
+  matchedCount: 1,
+  modifiedCount: 0,
   upsertedCount: 0,
   upsertedId: null,
 };
