@@ -18,9 +18,6 @@ export class Schedule {
   @Prop({ default: false })
   reserved: boolean;
 
-  @Prop({ default: false })
-  scheduled: boolean;
-
   @Prop({ type: SpecialitySchema })
   speciality: SpecialityDocument;
 

@@ -1,19 +1,16 @@
-import { Model } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
-import { ScheduleReserve } from '../../database/models/Schedule-reserve.schema';
-import { Guid } from 'guid-typescript';
 import { Injectable } from '@nestjs/common';
 import { validateScheduleBetweenTime, validateScheduleTime } from '../../utils/validateScheduleTime';
 import { ScheduleTimeService } from './schedule-time.service';
 import { DataBaseGetOneException, MoreThanOneException, TimeRunOutException } from '../exception/schedules.exception';
 import { ScheduleRepository } from '../repository/schedule.repository';
+import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
 
 @Injectable()
 export class ScheduleReserveService {
   constructor(
-    @InjectModel(ScheduleReserve.name) private scheduleReserveModel: Model<ScheduleReserve>,
     private readonly scheduleTimeService: ScheduleTimeService,
     private readonly scheduleRepository: ScheduleRepository,
+    private readonly scheduleReserveRepository: ScheduleReserveRepository,
   ) {}
 
   async createReserve(scheduleRequest) {
@@ -21,15 +18,15 @@ export class ScheduleReserveService {
     const recoveredTime = await this.scheduleTimeService.getMinutes();
 
     try {
-      const result = await this.recoveryReserveBySlotId(slotId);
+      const result = await this.recoveryReserve(slotId);
       const recoveredSchedule = await this.scheduleRepository.findOneBySlotId(result?.slotId);
 
       if (!result || !recoveredSchedule) {
-        scheduleRequest.reserveId = Guid.create();
-        const created = await this.scheduleReserveModel.create(scheduleRequest);
         await this.scheduleRepository.updateToReserve(slotId);
+        await this.scheduleRepository.updateLastScheduled(slotId);
+        const createdResult = await this.scheduleReserveRepository.create(scheduleRequest);
 
-        return { reserveId: created.reserveId };
+        return { reserveId: createdResult.reserveId };
       }
 
       const betweenMinutes = validateScheduleBetweenTime(result.scheduledTime, recoveredTime.minutes);
@@ -49,10 +46,9 @@ export class ScheduleReserveService {
     }
   }
 
-  async recoveryReserveBySlotId(slotId) {
+  async recoveryReserve(slotId) {
     try {
-      const result = await this.scheduleReserveModel.findOne({ slotId: slotId });
-      return result;
+      return this.scheduleReserveRepository.findOneBySlotId(slotId);
     } catch (e) {
       throw new DataBaseGetOneException();
     }

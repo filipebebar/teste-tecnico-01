@@ -8,7 +8,7 @@ export class ScheduleService {
 
   async findAllSchedules() {
     try {
-      return await this.scheduleRepository.findAll();
+      return await this.scheduleRepository.findAllUnreserved();
     } catch (e) {
       throw new DataBaseListException();
     }
