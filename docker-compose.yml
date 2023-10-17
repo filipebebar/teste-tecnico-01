@@ -11,7 +11,7 @@ services:
       MONGO_INITDB_USERNAME: root
       MONGO_INITDB_PASSWORD: example
       MONGO_INITDB_DATABASE: local
-      
+
   teste-tecnico-rededor:
     container_name: teste-tecnico-rededor
     ports:

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { DoctorModel, MinutesModel, ScheduleModel, SpecialityModel, UnitModel } from './dbModels';
 import { doctorsData, minutesData, schedulesData, specialitiesData, unitsData } from './dbData';
 
-const mongoDBUrl = 'mongodb://http://172.17.0.1:27017/local';
+const mongoDBUrl = 'mongodb://mongo_db:27017/local';
 
 async function populateDatabase() {
   try {

@@ -4,7 +4,7 @@ import { ScheduleModule } from './schedules/schedule.module';
 import { MongoLoggerMiddleware } from './middleware/MongoLoggerMiddleware.middleware';
 
 @Module({
-  imports: [MongooseModule.forRoot(`mongodb://http://172.17.0.1:27017/local`), ScheduleModule],
+  imports: [MongooseModule.forRoot(`mongodb://mongo_db:27017/local`), ScheduleModule],
   controllers: [],
   providers: [],
 })
