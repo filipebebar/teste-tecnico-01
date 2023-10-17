@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
 import { ScheduleTimeService } from '../service/schedule-time.service';
 import { ScheduleUtilController } from './schedule-util.controller';
 import { ScheduleService } from '../service/schedule.service';
@@ -10,17 +9,18 @@ import { ScheduleRepository } from '../repository/schedule.repository';
 import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
 import { ScheduleConfirmRepository } from '../repository/schedule-confirm.repository';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
+import {
+  ScheduleConfirmModelProvider,
+  ScheduleModelProvider,
+  ScheduleReserveModelProvider,
+  ScheduleTimeModelProvider,
+} from '../providers/scheduleModelProvider';
 
 describe('ScheduleController', () => {
   let scheduleUtilController: ScheduleUtilController;
   let scheduleTimeService: ScheduleTimeService;
 
   beforeEach(async () => {
-    const mockScheduleTimeModel = () => jest.fn();
-    const mockScheduleModel = () => jest.fn();
-    const mockScheduleReserveModel = () => jest.fn();
-    const mockScheduleConfirmModel = () => jest.fn();
-
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ScheduleUtilController],
       providers: [
@@ -33,22 +33,10 @@ describe('ScheduleController', () => {
         ScheduleReserveRepository,
         ScheduleConfirmRepository,
         ScheduleTimeRepository,
-        {
-          provide: getModelToken('ScheduleTime'),
-          useValue: mockScheduleTimeModel,
-        },
-        {
-          provide: getModelToken('Schedule'),
-          useValue: mockScheduleModel,
-        },
-        {
-          provide: getModelToken('ScheduleReserve'),
-          useValue: mockScheduleReserveModel,
-        },
-        {
-          provide: getModelToken('ScheduleConfirm'),
-          useValue: mockScheduleConfirmModel,
-        },
+        ScheduleModelProvider,
+        ScheduleReserveModelProvider,
+        ScheduleConfirmModelProvider,
+        ScheduleTimeModelProvider,
       ],
     }).compile();
 

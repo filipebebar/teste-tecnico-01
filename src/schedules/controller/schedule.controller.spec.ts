@@ -4,7 +4,6 @@ import { ScheduleService } from '../service/schedule.service';
 import { ScheduleReserveService } from '../service/schedule-reserve.service';
 import { ScheduleConfirmService } from '../service/schedule-confirm.service';
 import { ScheduleCancelService } from '../service/schedule-cancel.service';
-import { getModelToken } from '@nestjs/mongoose';
 import { ScheduleTimeService } from '../service/schedule-time.service';
 import { schedulesData } from '../../database/populate/dbData';
 import {
@@ -19,6 +18,12 @@ import { ScheduleRepository } from '../repository/schedule.repository';
 import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
 import { ScheduleConfirmRepository } from '../repository/schedule-confirm.repository';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
+import {
+  ScheduleConfirmModelProvider,
+  ScheduleModelProvider,
+  ScheduleReserveModelProvider,
+  ScheduleTimeModelProvider,
+} from '../providers/scheduleModelProvider';
 
 describe('ScheduleController', () => {
   let scheduleController: ScheduleController;
@@ -28,11 +33,6 @@ describe('ScheduleController', () => {
   let scheduleCancelService: ScheduleCancelService;
 
   beforeEach(async () => {
-    const mockScheduleModel = () => jest.fn();
-    const mockScheduleReserveModel = () => jest.fn();
-    const mockScheduleConfirmModel = () => jest.fn();
-    const mockScheduleTimeModel = () => jest.fn();
-
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ScheduleController],
       providers: [
@@ -45,22 +45,10 @@ describe('ScheduleController', () => {
         ScheduleReserveRepository,
         ScheduleConfirmRepository,
         ScheduleTimeRepository,
-        {
-          provide: getModelToken('Schedule'),
-          useValue: mockScheduleModel,
-        },
-        {
-          provide: getModelToken('ScheduleReserve'),
-          useValue: mockScheduleReserveModel,
-        },
-        {
-          provide: getModelToken('ScheduleConfirm'),
-          useValue: mockScheduleConfirmModel,
-        },
-        {
-          provide: getModelToken('ScheduleTime'),
-          useValue: mockScheduleTimeModel,
-        },
+        ScheduleModelProvider,
+        ScheduleReserveModelProvider,
+        ScheduleConfirmModelProvider,
+        ScheduleTimeModelProvider,
       ],
     }).compile();
 

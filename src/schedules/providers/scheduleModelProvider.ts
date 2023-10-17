@@ -5,6 +5,8 @@ import { ScheduleReserveRepository } from '../repository/schedule-reserve.reposi
 import { ScheduleRepository } from '../repository/schedule.repository';
 import { ScheduleTimeService } from '../service/schedule-time.service';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
+import { ScheduleService } from '../service/schedule.service';
+import { ScheduleReserveService } from '../service/schedule-reserve.service';
 
 const useValue = {
   findOne: jest.fn(),
@@ -13,7 +15,7 @@ const useValue = {
   findOneAndUpdate: jest.fn(),
 };
 
-export const ScheduleProvider = {
+export const ScheduleModelProvider = {
   provide: getModelToken('Schedule'),
   useValue: useValue,
 };
@@ -36,9 +38,7 @@ export const ProvidersList = [
   ScheduleReserveRepository,
   ScheduleRepository,
   ScheduleTimeService,
+  ScheduleService,
+  ScheduleReserveService,
   ScheduleTimeRepository,
-  ScheduleConfirmModelProvider,
-  ScheduleProvider,
-  ScheduleReserveModelProvider,
-  ScheduleTimeModelProvider,
 ];

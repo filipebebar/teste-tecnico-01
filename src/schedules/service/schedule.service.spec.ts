@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getModelToken } from '@nestjs/mongoose';
 import { ScheduleService } from './schedule.service';
 import { ScheduleRepository } from '../repository/schedule.repository';
 import { ScheduleTimeService } from './schedule-time.service';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
+import { ScheduleModelProvider, ScheduleTimeModelProvider } from '../providers/scheduleModelProvider';
 
 describe('ScheduleService', () => {
   let scheduleService: ScheduleService;
@@ -16,14 +16,8 @@ describe('ScheduleService', () => {
         ScheduleTimeService,
         ScheduleRepository,
         ScheduleTimeRepository,
-        {
-          provide: getModelToken('Schedule'),
-          useValue: () => jest.fn(),
-        },
-        {
-          provide: getModelToken('ScheduleTime'),
-          useValue: () => jest.fn(),
-        },
+        ScheduleModelProvider,
+        ScheduleTimeModelProvider,
       ],
     }).compile();
 

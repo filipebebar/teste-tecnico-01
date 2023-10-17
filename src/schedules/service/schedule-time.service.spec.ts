@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ScheduleTimeService } from './schedule-time.service';
-import { getModelToken } from '@nestjs/mongoose';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
+import { ScheduleTimeModelProvider } from '../providers/scheduleModelProvider';
 
 describe('ScheduleTimeService', () => {
   let scheduleTimeService: ScheduleTimeService;
@@ -9,17 +9,7 @@ describe('ScheduleTimeService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        ScheduleTimeService,
-        ScheduleTimeRepository,
-        {
-          provide: getModelToken('ScheduleTime'),
-          useValue: {
-            findOne: jest.fn(),
-            updateOne: jest.fn(),
-          },
-        },
-      ],
+      providers: [ScheduleTimeService, ScheduleTimeRepository, ScheduleTimeModelProvider],
     }).compile();
 
     scheduleTimeService = module.get<ScheduleTimeService>(ScheduleTimeService);

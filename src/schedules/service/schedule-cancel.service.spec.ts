@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ScheduleCancelService } from './schedule-cancel.service';
-import { ProvidersList } from '../providers/schedule.provider';
+import { ProviderServiceList } from '../providers/scheduleModelProvider';
 
 describe('ScheduleCancelService', () => {
   let scheduleCancelService: ScheduleCancelService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: ProvidersList,
+      providers: ProviderServiceList,
     }).compile();
 
     scheduleCancelService = module.get<ScheduleCancelService>(ScheduleCancelService);
