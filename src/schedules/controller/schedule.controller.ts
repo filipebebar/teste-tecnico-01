@@ -1,9 +1,11 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ScheduleService } from '../service/schedule.service';
 import { ScheduleReserveService } from '../service/schedule-reserve.service';
-import { ScheduleCancelRequestDTO, ScheduleConfirmRequestDTO, ScheduleRequestDTO } from '../dto/schedule.dto';
 import { ScheduleConfirmService } from '../service/schedule-confirm.service';
 import { ScheduleCancelService } from '../service/schedule-cancel.service';
+import { ScheduleRequestDTO } from '../dto/schedule-request.dto';
+import { ScheduleConfirmRequestDTO } from '../dto/schedule-confirm-request.dto';
+import { ScheduleCancelRequestDTO } from '../dto/schedule-cancel-request.dto';
 
 @Controller('schedules')
 export class ScheduleController {
