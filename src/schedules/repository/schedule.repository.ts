@@ -17,17 +17,19 @@ export class ScheduleRepository {
     if (!result || result.length <= 0) {
       return new NotFoundException();
     }
-    const teste = await this.mountListUpdated(result);
-    return teste;
+    return await this.mountListUpdated(result);
   }
 
   async updateToReserve(slotId) {
-    const result = await this.findOneBySlotId(slotId);
-    if (!result) {
-      await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: true, lastAppointment: new Date() } });
-      return true;
-    }
-    return false;
+    const query = { slotId: slotId };
+    const update = { $set: { reserved: true, lastAppointment: new Date() } };
+
+    await this.scheduleModel
+      .findOneAndUpdate(query, update)
+      .exec()
+      .then((doc) => {
+        return !doc;
+      });
   }
 
   async updateToUnbook(slotId) {

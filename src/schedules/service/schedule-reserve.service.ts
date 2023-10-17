@@ -38,7 +38,7 @@ export class ScheduleReserveService {
       const passMinutes = validateScheduleTime(result.scheduledTime, recoveredTime.minutes);
 
       if (passMinutes) {
-        await this.scheduleRepository.updateToReserve(slotId);
+        await this.scheduleRepository.updateToUnbook(slotId);
         return new TimeRunOutException();
       }
     } catch (e) {

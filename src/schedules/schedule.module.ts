@@ -14,6 +14,7 @@ import { ScheduleUtilController } from './controller/schedule-util.controller';
 import { ScheduleRepository } from './repository/schedule.repository';
 import { ScheduleConfirmRepository } from './repository/schedule-confirm.repository';
 import { ScheduleReserveRepository } from './repository/schedule-reserve.repository';
+import { ScheduleTimeRepository } from './repository/schedule-time.repository';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ScheduleReserveRepository } from './repository/schedule-reserve.reposit
     ScheduleRepository,
     ScheduleConfirmRepository,
     ScheduleReserveRepository,
+    ScheduleTimeRepository,
   ],
   exports: [
     ScheduleService,
@@ -41,6 +43,10 @@ import { ScheduleReserveRepository } from './repository/schedule-reserve.reposit
     ScheduleConfirmService,
     ScheduleCancelService,
     ScheduleTimeService,
+    ScheduleRepository,
+    ScheduleConfirmRepository,
+    ScheduleReserveRepository,
+    ScheduleTimeRepository,
   ],
 })
 export class ScheduleModule {}
