@@ -19,6 +19,6 @@ export class ScheduleTimeRepository {
     if (result.modifiedCount === 1) {
       return 'Tempo de reserva de agendamento atualizado com sucesso!';
     }
-    return result;
+    return 'Nenhum agendamento foi atualizado';
   }
 }

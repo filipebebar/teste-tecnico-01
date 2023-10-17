@@ -16,7 +16,7 @@ export class ScheduleTimeService {
 
   async updateTimeSchedule(scheduleTimeRequest) {
     try {
-      await this.scheduleTimeRepository.updateBySlotId(scheduleTimeRequest);
+      return await this.scheduleTimeRepository.updateBySlotId(scheduleTimeRequest);
     } catch (e) {
       throw new DataBaseUpdateException();
     }
