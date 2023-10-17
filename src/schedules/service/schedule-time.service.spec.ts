@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ScheduleTimeService } from './schedule-time.service';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
-import { ScheduleTimeModelProvider } from '../providers/scheduleModelProvider';
+import { ScheduleTimeModelProvider } from '../providers/schedule-model.provider';
 
 describe('ScheduleTimeService', () => {
   let scheduleTimeService: ScheduleTimeService;

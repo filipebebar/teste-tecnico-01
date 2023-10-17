@@ -3,7 +3,7 @@ import { ScheduleService } from './schedule.service';
 import { ScheduleRepository } from '../repository/schedule.repository';
 import { ScheduleTimeService } from './schedule-time.service';
 import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
-import { ScheduleModelProvider, ScheduleTimeModelProvider } from '../providers/scheduleModelProvider';
+import { ScheduleModelProvider, ScheduleTimeModelProvider } from '../providers/schedule-model.provider';
 
 describe('ScheduleService', () => {
   let scheduleService: ScheduleService;

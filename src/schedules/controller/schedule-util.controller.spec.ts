@@ -14,7 +14,7 @@ import {
   ScheduleModelProvider,
   ScheduleReserveModelProvider,
   ScheduleTimeModelProvider,
-} from '../providers/scheduleModelProvider';
+} from '../providers/schedule-model.provider';
 
 describe('ScheduleController', () => {
   let scheduleUtilController: ScheduleUtilController;
