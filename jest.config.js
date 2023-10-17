@@ -9,6 +9,7 @@ module.exports = {
     'utils',
     'schemas',
     'populate',
+    'provider',
     '.mock.ts$',
     '.dto.ts$',
     '.errors.ts$',
