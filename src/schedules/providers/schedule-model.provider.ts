@@ -13,6 +13,7 @@ const useValue = {
   updateOne: jest.fn(),
   create: jest.fn(),
   findOneAndUpdate: jest.fn(),
+  find: jest.fn(),
 };
 
 export const ScheduleModelProvider = {

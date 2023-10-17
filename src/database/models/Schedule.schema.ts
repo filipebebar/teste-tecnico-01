@@ -27,7 +27,7 @@ export class Schedule {
   @Prop({ type: DoctorSchema })
   doctor: DoctorDocument;
 
-  @Prop()
+  @Prop({ default: null })
   lastAppointment: Date;
 }
 

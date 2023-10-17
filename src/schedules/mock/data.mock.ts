@@ -56,3 +56,141 @@ export const mockUpdateResult = {
   upsertedCount: 0,
   upsertedId: null,
 };
+
+export const mockResultScheduleList = [
+  {
+    doctor: {
+      name: 'Garibalde Afonso',
+      slotId: '71621e15-6611-4014-870d-129c54b6b4c9',
+    },
+    endDate: '2023-10-14T09:30:00.068Z',
+    slotId: '30ae1c40-83ba-40c4-99fa-ddcd6ce39a7e',
+    speciality: {
+      name: 'Ortopedia',
+      slotId: '8a5b993d-eb45-48ee-8f4f-4b4976bf40a8',
+    },
+    startDate: '2023-10-14T09:00:00.068Z',
+    unit: {
+      name: 'Afonso Pena',
+      slotId: '16535468-7884-4136-96a9-bbc17773b8ff',
+    },
+  },
+  {
+    doctor: {
+      name: 'Naruto',
+      slotId: '5497403e-49bf-4629-af09-540daf286272',
+    },
+    endDate: {},
+    slotId: '65530b7b-c790-485d-b66d-2bee14485b4b',
+    speciality: {
+      name: 'Pediatria',
+      slotId: 'a8da6b1c-8488-4a33-9a18-e2ef0259686a',
+    },
+    startDate: {},
+    unit: {
+      name: 'Airton Senna',
+      slotId: 'e5fdeab6-15b8-4da7-a9ac-afe9adfc6209',
+    },
+  },
+];
+export const mockResultScheduleListComplete = [
+  {
+    doctor: {
+      name: 'Garibalde Afonso',
+      slotId: '71621e15-6611-4014-870d-129c54b6b4c9',
+    },
+    endDate: '2023-10-14T09:30:00.068Z',
+    slotId: '30ae1c40-83ba-40c4-99fa-ddcd6ce39a7e',
+    speciality: {
+      name: 'Ortopedia',
+      slotId: '8a5b993d-eb45-48ee-8f4f-4b4976bf40a8',
+    },
+    startDate: '2023-10-14T09:00:00.068Z',
+    unit: {
+      name: 'Afonso Pena',
+      slotId: '16535468-7884-4136-96a9-bbc17773b8ff',
+    },
+    reserved: false,
+    lastAppointment: null,
+  },
+  {
+    doctor: {
+      name: 'Naruto',
+      slotId: '5497403e-49bf-4629-af09-540daf286272',
+    },
+    endDate: {},
+    slotId: '65530b7b-c790-485d-b66d-2bee14485b4b',
+    speciality: {
+      name: 'Pediatria',
+      slotId: 'a8da6b1c-8488-4a33-9a18-e2ef0259686a',
+    },
+    startDate: {},
+    unit: {
+      name: 'Airton Senna',
+      slotId: 'e5fdeab6-15b8-4da7-a9ac-afe9adfc6209',
+    },
+    reserved: false,
+    lastAppointment: null,
+  },
+];
+
+export const mockResultScheduleListCompleteWithAppoitment = [
+  {
+    doctor: {
+      name: 'Garibalde Afonso',
+      slotId: '71621e15-6611-4014-870d-129c54b6b4c9',
+    },
+    endDate: '2023-10-14T09:30:00.068Z',
+    slotId: '30ae1c40-83ba-40c4-99fa-ddcd6ce39a7e',
+    speciality: {
+      name: 'Ortopedia',
+      slotId: '8a5b993d-eb45-48ee-8f4f-4b4976bf40a8',
+    },
+    startDate: '2023-10-14T09:00:00.068Z',
+    unit: {
+      name: 'Afonso Pena',
+      slotId: '16535468-7884-4136-96a9-bbc17773b8ff',
+    },
+    reserved: false,
+    lastAppointment: null,
+  },
+  {
+    doctor: {
+      name: 'Naruto',
+      slotId: '5497403e-49bf-4629-af09-540daf286272',
+    },
+    endDate: {},
+    slotId: '65530b7b-c790-485d-b66d-2bee14485b4b',
+    speciality: {
+      name: 'Pediatria',
+      slotId: 'a8da6b1c-8488-4a33-9a18-e2ef0259686a',
+    },
+    startDate: {},
+    unit: {
+      name: 'Airton Senna',
+      slotId: 'e5fdeab6-15b8-4da7-a9ac-afe9adfc6209',
+    },
+    reserved: false,
+    lastAppointment: new Date(),
+  },
+];
+
+export const mockFindOne = {
+  doctor: {
+    name: 'Garibalde Afonso',
+    slotId: '71621e15-6611-4014-870d-129c54b6b4c9',
+  },
+  endDate: '2023-10-14T09:30:00.068Z',
+  slotId: '30ae1c40-83ba-40c4-99fa-ddcd6ce39a7e',
+  speciality: {
+    name: 'Ortopedia',
+    slotId: '8a5b993d-eb45-48ee-8f4f-4b4976bf40a8',
+  },
+  startDate: '2023-10-14T09:00:00.068Z',
+  unit: {
+    name: 'Afonso Pena',
+    slotId: '16535468-7884-4136-96a9-bbc17773b8ff',
+  },
+  reserved: false,
+  lastAppointment: null,
+};
