@@ -12,6 +12,8 @@ import { ScheduleTime, ScheduleTimeSchema } from '../database/models/Schedule-ti
 import { ScheduleTimeService } from './service/schedule-time.service';
 import { ScheduleUtilController } from './controller/schedule-util.controller';
 import { ScheduleRepository } from './repository/schedule.repository';
+import { ScheduleConfirmRepository } from './repository/schedule-confirm.repository';
+import { ScheduleReserveRepository } from './repository/schedule-reserve.repository';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { ScheduleRepository } from './repository/schedule.repository';
     ScheduleCancelService,
     ScheduleTimeService,
     ScheduleRepository,
+    ScheduleConfirmRepository,
+    ScheduleReserveRepository,
   ],
   exports: [
     ScheduleService,

@@ -29,6 +29,9 @@ export class Schedule {
 
   @Prop({ type: DoctorSchema })
   doctor: DoctorDocument;
+
+  @Prop()
+  lastAppointment: Date;
 }
 
 export type ScheduleDocument = Schedule & mongoose.Document;

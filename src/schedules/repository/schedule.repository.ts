@@ -35,13 +35,17 @@ export class ScheduleRepository {
     );
   }
 
-  async update(slotId) {
+  async updateToReserve(slotId) {
     const result = await this.findOneBySlotId(slotId);
     if (!result) {
       await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: true, lastAppointment: new Date() } });
       return true;
     }
     return false;
+  }
+
+  async updateToUnbook(slotId) {
+    await this.scheduleModel.updateOne({ slotId: slotId }, { $set: { reserved: false } });
   }
 
   async findOneBySlotId(slotId) {
