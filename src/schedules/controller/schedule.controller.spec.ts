@@ -15,6 +15,10 @@ import {
   mockScheduleConfirmRequest,
   mockScheduleRequest,
 } from '../mock/data.mock';
+import { ScheduleRepository } from '../repository/schedule.repository';
+import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
+import { ScheduleConfirmRepository } from '../repository/schedule-confirm.repository';
+import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
 
 describe('ScheduleController', () => {
   let scheduleController: ScheduleController;
@@ -37,6 +41,10 @@ describe('ScheduleController', () => {
         ScheduleConfirmService,
         ScheduleCancelService,
         ScheduleTimeService,
+        ScheduleRepository,
+        ScheduleReserveRepository,
+        ScheduleConfirmRepository,
+        ScheduleTimeRepository,
         {
           provide: getModelToken('Schedule'),
           useValue: mockScheduleModel,

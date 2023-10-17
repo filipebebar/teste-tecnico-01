@@ -6,6 +6,10 @@ import { ScheduleService } from '../service/schedule.service';
 import { ScheduleReserveService } from '../service/schedule-reserve.service';
 import { ScheduleConfirmService } from '../service/schedule-confirm.service';
 import { ScheduleCancelService } from '../service/schedule-cancel.service';
+import { ScheduleRepository } from '../repository/schedule.repository';
+import { ScheduleReserveRepository } from '../repository/schedule-reserve.repository';
+import { ScheduleConfirmRepository } from '../repository/schedule-confirm.repository';
+import { ScheduleTimeRepository } from '../repository/schedule-time.repository';
 
 describe('ScheduleController', () => {
   let scheduleUtilController: ScheduleUtilController;
@@ -25,6 +29,10 @@ describe('ScheduleController', () => {
         ScheduleTimeService,
         ScheduleConfirmService,
         ScheduleCancelService,
+        ScheduleRepository,
+        ScheduleReserveRepository,
+        ScheduleConfirmRepository,
+        ScheduleTimeRepository,
         {
           provide: getModelToken('ScheduleTime'),
           useValue: mockScheduleTimeModel,
