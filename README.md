@@ -1,6 +1,6 @@
 ## Description
 
-Aplicação implementada e voltada para o desafio técnico realizado pela Objective
+Aplicação implementada e voltada para o desafio técnico
 
 A aplicação foi pensada para rodar em docker, no qual a aplicação api e banco estão dentro do mesmo container e já em comunicação.
 Houve problemas adicionar o comando yarn populate dentro do dockerfile, o mesmo não estava identificando o arquivo populateMongoDb.ts.
