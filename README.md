@@ -20,7 +20,7 @@ $ yarn install
 # development
 $ docker compose up -d
 ```
-Acesse a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000)
+Acesse a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000/doc)
 
 Caso tenha problemas para rodar a aplicação no docker e a o banco mongoDB subir, siga:
 
@@ -34,7 +34,7 @@ $ yarn populate
 # fora do docker development
 $ yarn start:dev
 ```
-E acesse normalmente a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000)
+E acesse normalmente a aplicação: [Link de acesso após subir docker](http://127.0.0.1:3000/doc)
 
 ## Test
 
